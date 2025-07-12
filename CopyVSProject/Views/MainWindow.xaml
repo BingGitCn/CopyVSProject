@@ -1,0 +1,191 @@
+<Window
+    x:Class="CopyVSProject.Views.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:prism="http://prismlibrary.com/"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Name="MainWindowInstance"
+    Title="Visual Studio 项目导出工具"
+    Width="600"
+    Height="300"
+    prism:ViewModelLocator.AutoWireViewModel="False"
+    AllowsTransparency="True"
+    Background="Transparent"
+    FontFamily="FangSong"
+    TextElement.FontSize="14"
+    TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="None">
+
+    <Border
+        Background="White"
+        BorderBrush="{DynamicResource MaterialDesignBody}"
+        BorderThickness="0"
+        CornerRadius="4">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <!--  Custom Title Bar  -->
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!--  Custom Title Bar  -->
+            <Grid
+                Grid.Row="0"
+                Height="36"
+                Background="#6732b1"
+                MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    Grid.Column="0"
+                    Margin="15,0,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    FontSize="16"
+                    FontWeight="SemiBold"
+                    Foreground="White"
+                    IsHitTestVisible="False"
+                    Text="Visual Studio 项目导出工具 (Leader Tech)" />
+                <Button
+                    Grid.Column="1"
+                    Width="40"
+                    Height="40"
+                    Margin="0"
+                    Padding="0"
+                    Click="CloseButton_Click"
+                    Style="{StaticResource MaterialDesignFlatButton}">
+                    <materialDesign:PackIcon Foreground="White" Kind="Close" />
+                </Button>
+            </Grid>
+
+            <Grid Grid.Row="1" Margin="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <!--  Source Folder Selection  -->
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Margin="0,0,15,0"
+                    VerticalAlignment="Center"
+                    Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                    Text="源文件夹:" />
+                <TextBox
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Height="30"
+                    Padding="2,0"
+                    VerticalAlignment="Center"
+                    materialDesign:HintAssist.Hint="选择 VS 项目文件夹"
+                    IsReadOnly="True"
+                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                    Text="{Binding SourcePath, UpdateSourceTrigger=PropertyChanged}" />
+                <Button
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    Margin="15,0,0,0"
+                    VerticalAlignment="Center"
+                    materialDesign:ButtonAssist.CornerRadius="4"
+                    Command="{Binding SelectSourceFolderCommand}"
+                    Style="{StaticResource MaterialDesignRaisedButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon
+                            Margin="0,0,5,0"
+                            VerticalAlignment="Center"
+                            Kind="FolderOpen" />
+                        <TextBlock VerticalAlignment="Center" Text="浏览..." />
+                    </StackPanel>
+                </Button>
+
+                <!--  Output File Selection  -->
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Margin="0,20,15,0"
+                    VerticalAlignment="Center"
+                    Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                    Text="输出文件:" />
+                <TextBox
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Height="30"
+                    Margin="0,20,0,0"
+                    Padding="2,0"
+                    VerticalAlignment="Center"
+                    materialDesign:HintAssist.Hint="选择导出的文件路径"
+                    IsReadOnly="True"
+                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                    Text="{Binding OutputPath, UpdateSourceTrigger=PropertyChanged}" />
+                <Button
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    Margin="15,20,0,0"
+                    VerticalAlignment="Center"
+                    materialDesign:ButtonAssist.CornerRadius="4"
+                    Command="{Binding SelectOutputFileCommand}"
+                    Style="{StaticResource MaterialDesignRaisedButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon
+                            Margin="0,0,5,0"
+                            VerticalAlignment="Center"
+                            Kind="ZipBox" />
+                        <TextBlock VerticalAlignment="Center" Text="浏览..." />
+                    </StackPanel>
+                </Button>
+
+                <!--  Compress Button  -->
+                <Button
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    Margin="0,30,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    materialDesign:ButtonAssist.CornerRadius="6"
+                    Command="{Binding CompressProjectCommand}"
+                    Cursor=""
+                    Style="{StaticResource MaterialDesignRaisedButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon
+                            Margin="0,0,8,0"
+                            VerticalAlignment="Center"
+                            Kind="Archive" />
+                        <TextBlock VerticalAlignment="Center" Text="导出项目" />
+                    </StackPanel>
+                </Button>
+
+                <!--  Status/Log  -->
+                <ScrollViewer
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    Margin="0,30,0,0"
+                    VerticalScrollBarVisibility="Auto">
+                    <TextBlock
+                        Style="{StaticResource MaterialDesignBody2TextBlock}"
+                        Text="{Binding StatusMessage}"
+                        TextWrapping="Wrap" />
+                </ScrollViewer>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

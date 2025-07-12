@@ -1,0 +1,23 @@
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+bin/
+obj/
+
+# Packages
+packages/
+*.nupkg
+
+# Rider
+.idea/
+
+# Other
+*.log
+*.bak
+*.tmp
